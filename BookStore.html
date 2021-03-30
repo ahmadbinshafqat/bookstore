@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Book Store</title>
+	<script src="jquery-3.6.0.js"></script>
+</head>
+<body>
+	<h1>Book Store</h1>
+	
+		<input type="text" id="bookName" name="bookName" placeholder="Add new Book...">
+		<input type="submit" name="add" value="Add" onclick="addFunction();">
+
+		<div id="editForm" style="display: none;">
+		<br><br>
+		<input type="text" id="updatedBookName" name="updatedBookName">
+		<input type="submit" name="edit" value="Edit" onclick="editFunction();">
+		</div>
+
+		<p id="count"> </p>
+		<table id="tbl" class="table" border="1">
+			<thead>
+				<th>Books Name</th>
+			</thead>
+			
+			<tbody>
+				
+			</tbody>
+
+		</table>
+	
+
+	<script>
+
+
+
+		//var counter=[1,2,3,4,5];
+		var count = 5;
+		var index;
+		var booksArray = ['Data Structure','Applied Peogramming','Calculus','Web Programming','Operating System'];
+		//var booksArray = [];	
+		//document.getElementById("booksList").innerHTML = booksArray;
+		
+		document.getElementById("count").innerHTML=count + " books";
+				
+		var currow;
+
+
+		for (var i =0; i<booksArray.length;i++)
+		{
+			var tr = document.createElement('tr');
+			//	var button = document.createElement('button');
+			//	button.innerHTML="Delete";
+
+			var td1=tr.appendChild(document.createElement('td'));
+					
+			var td2=tr.appendChild(document.createElement('button'));
+			var td3=tr.appendChild(document.createElement('button'));
+			td1.innerHTML=booksArray[i];
+			td2.innerHTML= "Edit";
+			td2.id = "button"
+			td3.innerHTML= "Delete";
+
+
+			td3.className="btnDel";
+			td2.className="btnEdit";
+
+
+
+			console.log(booksArray[i]);
+			
+//			td3.addEventListener("click", DelFunction);
+//			td2.addEventListener("click", editFunction);
+
+
+
+			document.getElementById("tbl").appendChild(tr);
+
+
+			$("#tbl").on('click', '.btnEdit', function () 
+			{
+				document.getElementById("editForm").style.display="block";
+				currow=$(this).closest('tr');
+				var col1=currow.find('td:eq(0)').text();
+					
+				index = booksArray.indexOf(col1);
+				document.getElementById("updatedBookName").value=col1;
+			});
+				//	var but = tr.insertAdjacentElement(document.createElement('button'));
+				//	but.innerHTML="Delete";
+
+		//	document.getElementById("tbl").appendChild(tr);
+			td3.addEventListener("click", DelFunction);
+
+		}
+
+		
+		function editFunction()
+		{
+			
+			var x = document.getElementById("updatedBookName").value;
+			booksArray[index] = x;
+			currow.find('td:eq(0)').replaceWith(x);
+			
+			alert("replaced");
+			
+		}
+	
+
+		function DelFunction()
+		{
+			$("#tbl").on('click', '.btnDel', function () 
+			{
+				$(this).closest('tr').remove();
+				
+			});
+
+			count--;
+
+			document.getElementById("count").innerHTML=count + " books";
+
+			
+		}		
+
+		//document.getElementById("booksDict").innerHTML=booksDict;
+		function addFunction()
+		{
+			if (document.getElementById("bookName").value != "")
+			{
+				var newBookValue = document.getElementById("bookName").value;
+			
+				booksArray.push(newBookValue);
+				
+				var tr = document.createElement('tr');
+
+				var td1=tr.appendChild(document.createElement('td'));
+				var td2=tr.appendChild(document.createElement('button'));
+				var td3=tr.appendChild(document.createElement('button'));	
+
+				
+				td2.innerHTML= "Edit";
+				td3.innerHTML="Delete";
+				td1.innerHTML=newBookValue;
+				
+				td3.className = "btnDel";
+				td2.className="btnEdit";
+
+
+				
+
+				document.getElementById("tbl").appendChild(tr);
+
+				td3.addEventListener("click", DelFunction);
+			//	td2.addEventListener("click", editFunction);
+
+
+				count++;		
+				document.getElementById("count").innerHTML=count + " books";
+			}
+
+
+
+			$("#tbl").on('click', '.btnEdit', function () 
+			{
+				document.getElementById("editForm").style.display="block";
+				var currow=$(this).closest('tr');
+				var col1=currow.find('td:eq(0)').text();
+				document.getElementById("updatedBookName").value=col1;	
+				
+			});
+			//	document.getElementById("booksList").innerHTML = booksArray;
+			
+		//		count = count +1;
+		//		counter.push(count);
+		//		document.getElementById("booksDict").innerHTML=counter;
+		}
+		
+				
+
+	//	document.getElementById("booksList").innerHTML = booksArray;
+
+
+	</script>
+
+
+</body>
+</html>
